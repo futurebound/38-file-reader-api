@@ -7,7 +7,6 @@ export const createAction = picture => ({
 });
 
 export const createActionRequest = (picture) => (dispatch) => {
-  // vinicio - here, we could get it from the cookie as well
   let token = localStorage.getItem('token');
 
   return superagent.post(`${__API_URL__}${routes.PICTURES_ROUTE}`)
@@ -15,6 +14,6 @@ export const createActionRequest = (picture) => (dispatch) => {
     .field('description',picture.description)
     .attach('photo',picture.photo)
     .then( response => {
-      return dispatch(createAction(response.body)); // Vinicio - 'closing' the chain
+      return dispatch(createAction(response.body));
     });
 };

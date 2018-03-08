@@ -4,6 +4,7 @@ import Landing from './landing'
 import {Provider} from 'react-redux'
 import createStore from '../lib/app-create-store'
 import {BrowserRouter, Route, Redirect} from 'react-router-dom'
+import Navbar from '../component/navbar'
 
 const store = createStore()
 

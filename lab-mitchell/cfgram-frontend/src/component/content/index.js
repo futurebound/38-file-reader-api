@@ -8,7 +8,8 @@ class Content extends React.Component {
   render() {
     return (
       <div>
-        <h1>Upload a Picture</h1>
+        <h1>Welcome, authorized user (づ￣ ³￣)づ</h1>
+        <h2>Upload a Picture</h2>
         <PictureForm onComplete={this.props.createPicture} />
       </div>
     )

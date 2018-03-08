@@ -5,21 +5,18 @@ const fileToDataURL = file => {
     if(!file)
         return reject(new Error('File is required'));
 
-    //-------------------------------------------------------------
-    // vinicio - sync
     let reader = new FileReader();
     reader.addEventListener('load', () => resolve(reader.result));
     reader.addEventListener('error',reject);
-    //-------------------------------------------------------------
 
-    return reader.readAsDataURL(file); // vinicio - async
+    return reader.readAsDataURL(file);
   });
 };
 
 class PictureForm extends React.Component{
   constructor(props){
     super(props);
-    //-------------------------------------------------------------
+
     this.emptyState = {
       preview: undefined,
 
@@ -33,20 +30,15 @@ class PictureForm extends React.Component{
     };
 
     this.state = this.emptyState;
-    //-------------------------------------------------------------
-    // Binding Handlers
-    //-------------------------------------------------------------
+
     let memberFunctions = Object.getOwnPropertyNames(PictureForm.prototype);
     for(let functionName of memberFunctions){
       if(functionName.startsWith('handle')){
         this[functionName] = this[functionName].bind(this);
       }
     }
-    //-------------------------------------------------------------
   }
-  //----------------------------------------------------------------------
-  // Member Functions
-  //----------------------------------------------------------------------
+
   handleValidate({type,value,files}){
     let validImageTypes = ['image/png','image/jpeg','image/jpg'];
 
@@ -101,15 +93,11 @@ class PictureForm extends React.Component{
 
   handleSubmit(event){
     event.preventDefault();
-    //TODO: if there is an error don't call oncomplete
-    // let error = this.handleValidate;
+
     this.props.onComplete(this.state);
     this.setState(this.emptyState);
   }
 
-  //----------------------------------------------------------------------
-  // Life-cicle hooks
-  //----------------------------------------------------------------------
   render(){
     return(
       <form

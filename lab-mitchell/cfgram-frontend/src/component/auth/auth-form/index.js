@@ -1,5 +1,6 @@
 import React from 'react'
 import {renderIf} from '../../../lib/utils'
+import {Redirect} from 'react-router'
 
 export default class AuthForm extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ export default class AuthForm extends React.Component {
       emailError: null,
       passwordError: null,
       error: null,
+      fireRedirect: false,
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -31,13 +33,16 @@ export default class AuthForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     let {username, email, password} = this.state
-    this.props.onComplete({ username, email, password })
-    .then(() => this.setState({ username: '', email: '', password: '' }))
+    this.props.onComplete({ username, email, password})
+    .then(() => this.setState({fireRedirect: !this.state.fireRedirect, username: '', email: '', password: ''}))
     .catch(error => this.setState({error}))
   }
 
   render() {
+    const {fireRedirect} = this.state;
+
     return (
+      <div>
       <form
         className="auth-form"
         onSubmit={this.handleSubmit}
@@ -70,6 +75,10 @@ export default class AuthForm extends React.Component {
 
         <button type="submit">{this.props.auth}</button>
       </form>
+      {fireRedirect && 
+        (<Redirect to='/content' />
+      )}
+      </div>
     )
   }
 }
