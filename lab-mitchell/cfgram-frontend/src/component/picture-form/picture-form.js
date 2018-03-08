@@ -52,18 +52,22 @@ class PictureForm extends React.Component{
 
     switch(type){
       case 'file':
-        if(files.length !== 1)
+        if(files.length !== 1) {
+          console.log('handleValidate: description length error');
           return 'You must only select one file';
-
+        }
         let imageType = files[0].type;
 
-        if(!validImageTypes.includes(imageType))
+        if(!validImageTypes.includes(imageType)) {
+          console.log('handleValidate: image type error');
           return 'The image must be a png or a jpg';
-
+        }
         return null;
       case 'text':
-        if(value.length < 10)
+        if(value.length < 10) {
+          console.log('handleValidate: description length error');
           return 'You must have at least 10 characters';
+        }
         return null;
       default:
         return null;
@@ -76,8 +80,10 @@ class PictureForm extends React.Component{
     if(type === 'file'){
       let error = this.handleValidate(event.target);
       if(!error){
+        console.log('handleChange: no error, calling fileToDataURL')
         fileToDataURL(files[0])
-          .then(preview => this.setState({preview}));
+          .then(preview => this.setState({preview}))
+          .catch(console.error);
       }
       this.setState({
         photo: files[0],
@@ -96,6 +102,7 @@ class PictureForm extends React.Component{
   handleSubmit(event){
     event.preventDefault();
     //TODO: if there is an error don't call oncomplete
+    // let error = this.handleValidate;
     this.props.onComplete(this.state);
     this.setState(this.emptyState);
   }
